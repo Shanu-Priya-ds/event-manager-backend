@@ -18,7 +18,7 @@ const addRegistration = async (req, res)=>{
     }catch(error){
         res.status(404).json({
             error:`User Registration failed. ${error.message}`
-        })
+        });
         console.error(error);
     }
 }

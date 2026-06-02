@@ -8,24 +8,49 @@ const  getEvents = async (req,res)=>{
         res.json(events);
     }catch(error){
         console.error(error);
+        return res.status(500).json({
+            message: "Internal server error."
+        });
+    }
+}
+
+
+const getAllEvents = async (req,res)=>{
+    try{
+        const events = await Event.find({});
+        res.json(events);
+    }catch(error){
+       console.error(error);
+        return res.status(500).json({
+            message: "Internal server error."
+        });
     }
 }
 
 const getEventById = async (req, res)=>{
     try{
         const event = await Event.findById(req.params.id);
+        
+        if (!event) return res.status(404).json({ error: 'Event not found' });
         res.json(event);
     }catch(error){
-        console.error(error);
+     console.error(error);
+        return res.status(500).json({
+            message: "Internal server error."
+        });
     }
 }
 
 const createNewEvent = async (req, res)=>{
     try{
+        req.body.organizerId = req.user.userId;
         const createdEvent = await Event.create(req.body);
         res.status(201).json(createdEvent);
     }catch(error){
         console.error(error);
+        return res.status(500).json({
+            message: "Internal server error."
+        });
     }
 }
 
@@ -36,7 +61,10 @@ const updateEvent = async (req, res)=>{
             updatedEvent:updatedEvent
         });
     }catch(error){
-        console.error(error);
+       console.error(error);
+        return res.status(500).json({
+            message: "Internal server error."
+        });
     }
 }
 
@@ -46,7 +74,10 @@ const deleteEvent = async(req, res)=>{
          res.json({message: "Event deleted Successfully"});
      }catch(error){
         console.error(error);
+        return res.status(500).json({
+            message: "Internal server error."
+        });
     }
 }
 
-module.exports = {getEvents, getEventById, createNewEvent, updateEvent, deleteEvent}
+module.exports = {getEvents, getAllEvents, getEventById, createNewEvent, updateEvent, deleteEvent}
