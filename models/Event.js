@@ -13,9 +13,9 @@ const eventSchema = mongoose.Schema({
     },
     venue: {
         type: String,
-        required: true
+        //required: true
     },
-    dateTime: {
+    dateTime: {//mongodb storesthe ISO format dateTime
         type: Date,
         required: true
     },
@@ -28,9 +28,10 @@ const eventSchema = mongoose.Schema({
 
 //middleware function gets called before the actual db operation happens
 //runs before deleting by ID
-eventSchema.pre("findByIdAndSave",async function(){
+eventSchema.pre("findOneAndDelete",async function(){
     const registration = require("./Registration");
-    await registration.deleteMany({eventId:this.ObjectId})
+    const eventId = this.getQuery()._id;;
+    await registration.deleteMany({eventId})
 } );
 
 module.exports = mongoose.model("Event", eventSchema);
