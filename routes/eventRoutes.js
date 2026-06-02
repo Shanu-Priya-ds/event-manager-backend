@@ -1,6 +1,8 @@
 const eventRoutes = require("express").Router();
 const {getEvents, getEventById, createNewEvent, updateEvent, deleteEvent } = require("../controllers/eventController")
+const authMiddleware = require("../middleware/authMiddleware");
 
+eventRoutes.use(authMiddleware);
 //get all events
 eventRoutes.get("/", (req, res)=>{
     console.log("Get events router");

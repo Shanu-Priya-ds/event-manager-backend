@@ -1,3 +1,4 @@
+//const router = require("express").Router();
 const Event = require("../models/Event");
 
 //fetch all the events from db for the logged in user

@@ -7,4 +7,4 @@ const generateToken = (username, email, _id)=>{
     return jswt.sign(payLoad, secretCode, {expiresIn:expiry} )
 }
 
-module.exports = generateToken;
+module.exports = {generateToken, expiry};
