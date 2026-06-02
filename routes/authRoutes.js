@@ -1,9 +1,12 @@
 const authRoutes = require("express").Router();
+const {createUser, authenticateUser} = require("../controllers/authController");
 
-
-authRoutes.get("/login",(req, res)=>{
-   res.send("login restAPI");
+authRoutes.post("/register",(req, res)=>{
+   createUser(req, res);
   
 })
 
+authRoutes.post("/login",(req, res)=>{
+   authenticateUser(req, res);
+})
 module.exports = authRoutes;

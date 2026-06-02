@@ -7,6 +7,7 @@ const db = require("./config/db");
 const routes= require("./routes");
 
 //middleware
+app.use(express.urlencoded({extended:true}))
 
 //routes
 app.use("/api",routes);
