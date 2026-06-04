@@ -1,5 +1,6 @@
 //const router = require("express").Router();
 const Event = require("../models/Event");
+const Registration = require("../models/Registration");
 
 //fetch all the events from db for the logged in user
 const getEvents = async (req, res) => {
@@ -36,8 +37,8 @@ const getEventById = async (req, res) => {
         // If user is organizer, get attendee details
         let attendees = [];
         if (event.organizerId._id.toString() === req.user.userId) {
-            const registrations = await Registration.find({ eventId }).populate('userId');
-            attendees = registrations.map(reg => reg.userId);
+            const registrations = await Registration.find({ eventId:req.params.id }).populate('userId');
+            if(registrations!=null) attendees = registrations.map(reg => reg.userId);
         }
          // Count registrations
         const attendeeCount = attendees.length;
