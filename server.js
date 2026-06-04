@@ -19,4 +19,4 @@ app.use("/api",routes);
 //start the express server
 app.listen(PORT,()=>{
     console.log(`Event Management Application started and listening on ${PORT}.`);
-})
+});
