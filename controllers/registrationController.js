@@ -54,5 +54,15 @@ const deleteRegistration = async (req, res)=>{
     }
 }
 
+const getMyRegistrations = async(req, res)=>{
+    try{
+        const data = await Registration.find({userId:req.user.userId}).populate('eventId');
+        console.log(data);
+        res.json(data);
+    }catch(error){
+        res.status(500).json({error: error.message});
+        console.error(error);
+    }
+}
 
-module.exports = {addRegistration, getRegistrationById, getRegistrationByEventId, deleteRegistration};
+module.exports = {addRegistration, getRegistrationById, getMyRegistrations, getRegistrationByEventId, deleteRegistration};

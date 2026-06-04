@@ -6,6 +6,6 @@ const registrationRoutes = require("./registrationRoutes");
 
 router.use("/events",eventRoutes);
 router.use("/auth", authRoutes);
-router.use("/registration", registrationRoutes);
+router.use("/registrations", registrationRoutes);
 
 module.exports = router;

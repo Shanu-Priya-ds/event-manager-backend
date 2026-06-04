@@ -1,6 +1,6 @@
 const registrationRoutes = require("express").Router();
 const authMiddleware = require("../middleware/authMiddleware");
-const {addRegistration, getRegistrationById, getRegistrationByEventId, deleteRegistration} = require("../controllers/registrationController");
+const {addRegistration, getRegistrationById, getMyRegistrations , getRegistrationByEventId, deleteRegistration} = require("../controllers/registrationController");
 const isEventOrganizer = require("../middleware/eventMiddlware");
 //middleware to check the validity of token before routes get executed
 registrationRoutes.use(authMiddleware);
@@ -12,6 +12,10 @@ registrationRoutes.get("/:id",(req, res)=>{
 //protected route only for orgnaizer
 registrationRoutes.get("/event/:eventId", isEventOrganizer,(req, res)=>{
    getRegistrationByEventId(req, res);
+});
+
+registrationRoutes.get("/", (req, res)=>{
+   getMyRegistrations(req, res);
 });
 
 registrationRoutes.post("/:eventId", (req, res)=>{
