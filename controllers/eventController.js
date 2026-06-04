@@ -29,22 +29,25 @@ const getAllEvents = async (req, res) => {
 
 const getEventById = async (req, res) => {
     try {
-        const event = await Event.findById(req.params.id).populate("organizerId",'username email');
+        const event = await Event.findById(req.params.id).populate("organizerId", 'username email');
         console.log(event);
         if (!event) return res.status(404).json({ error: 'Event not found' });
-       
+
         // If user is organizer, get attendee details
         let attendees = [];
-        if (event.organizerId === req.user.userId) {
+        if (event.organizerId._id.toString() === req.user.userId) {
             const registrations = await Registration.find({ eventId }).populate('userId');
             attendees = registrations.map(reg => reg.userId);
         }
          // Count registrations
         const attendeeCount = attendees.length;
 
-        res.json({...event, attendeeCount, attendees, 
-            organizerId:event.organizerId?._id,
-            organizerName: event.organizerId?.username 
+        res.json({
+            ...event,
+            attendeeCount,
+            attendees,
+            organizerId: event.organizerId._id.toString(),
+            organizerName: event.organizerId.username
         });
     } catch (error) {
         console.error(error);
