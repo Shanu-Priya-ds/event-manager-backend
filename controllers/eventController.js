@@ -87,7 +87,7 @@ const deleteEvent = async (req, res) => {
     try {
         const deletedObject = await Event.findByIdAndDelete(req.params.id);
         if (!deletedObject) return res.status(404).json({ error: "Event not found" });
-        res.status(204).send();
+        res.status(200).json(deletedObject);
     } catch (error) {
         console.error(error);
         return res.status(500).json({
