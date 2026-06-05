@@ -11,7 +11,7 @@ const routes= require("./routes");
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors({
-    origin:"http://localhost:5173"
+    origin:process.env.FRONTEND_URL
 }));
 //routes
 app.use("/api",routes);
