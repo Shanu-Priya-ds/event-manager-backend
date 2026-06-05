@@ -2,6 +2,8 @@
 
 A RESTful API backend for managing events and user registrations. Built with Express.js, MongoDB, and JWT authentication.
 
+**[Live API](https://event-manager-backend-hhfs.onrender.com)** | **[Frontend Repository](https://github.com/Shanu-Priya-ds/event-manager-frontend)**
+
 ## Features
 
 - **User Authentication**: Register and login with JWT token-based authentication
@@ -80,7 +82,18 @@ event_manager_backend/
    npm start
    ```
    
-   The server will start on `http://localhost:5000`
+   The server will start on `http://localhost:5000` (or the port specified in your .env file)
+
+## Deployment
+
+The backend is deployed on Render at: **https://event-manager-backend-hhfs.onrender.com**
+
+### Environment Variables for Deployment
+Ensure the following environment variables are set in your deployment platform:
+- `PORT`: Server port (default: 3080)
+- `MONGO_URI`: MongoDB connection string
+- `JWTSECRET`: JWT secret key for token generation
+- `FRONTEND_URL`: URL of the frontend application
 
 ## API Endpoints
 
