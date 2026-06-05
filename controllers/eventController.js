@@ -44,7 +44,7 @@ const getEventById = async (req, res) => {
         const attendeeCount = attendees.length;
 
         res.json({
-            ...event,
+            ...event.toObject(),
             attendeeCount,
             attendees,
             organizerId: event.organizerId._id.toString(),
