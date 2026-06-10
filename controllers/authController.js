@@ -17,8 +17,6 @@ const createUser = async (req, res) => {
 
     } catch (error) {
         //console.error("Failed to create the user", error);
-        console.log(error.code)
-        console.log(error.errorResponse);
         if (error?.code === 11000) {
             const field = Object.keys(error.keyValue)[0];
 
