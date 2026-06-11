@@ -11,7 +11,9 @@ const userSchema = mongoose.Schema({
 
     password: {
         type: String,
-        required: true,
+        required: function(){
+            return !this.googleId;
+        },//if oAuth, password is not required
         minLength: 5
     },
 
@@ -26,17 +28,27 @@ const userSchema = mongoose.Schema({
         enum: ["user", "admin"],
         default: "user"
     },
+    googleId: { 
+        type: String,
+        sparse: true,//unique index applies only for the documents who have the googleId, do it wont conflict with user created using usernam/password
+        unique: true
+     }, // for Google auth users
 },{ timestamps: true });
 
 userSchema.pre("save", async function () {
-    if (this.isNew || this.isModified("password")) {
+    console.log(this.password)
+    if (this.password && (this.isNew || this.isModified("password"))) {
         //hash password
         this.password = await bcrypt.hash(this.password, saltRound);
     }
 });
 
 userSchema.methods.isCorrectPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
+    if(this.password)
+        return await bcrypt.compare(password, this.password);
+    else
+        return true;
+    
 }
 
 
